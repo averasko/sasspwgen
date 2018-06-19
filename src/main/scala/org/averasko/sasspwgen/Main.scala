@@ -13,4 +13,8 @@ object Main extends App {
 
   println("Numbers: " + Generators.numbers(3))
 
+  println("Years: " + Generators.years)
+  println("Months: " + Generators.months)
+  println("Days: " + Generators.days)
+
 }
