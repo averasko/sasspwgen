@@ -18,7 +18,7 @@ object Generators {
 //
 //  }
 
-  def findLastIncreaseIdx(l : List[Int]) : Int = {
+  def lastIncValueIdx(l : List[Int]) : Int = {
     def rec(resIdx: Int, idx : Int, l : List[Int]) : Int = l match {
       case List() => resIdx
       case List(x) => resIdx
