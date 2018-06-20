@@ -19,7 +19,7 @@ object Main extends App {
 
   //println("AllPermuts: " + Generators.allPermuts(5))
 
-  val l = List(1,2,3,4);
+  val l = Vector(1,2,3,4);
   println("findLastIncreaseIdx(" + l + ") = " + Generators.lastIncValueIdx(l))
 
 }
