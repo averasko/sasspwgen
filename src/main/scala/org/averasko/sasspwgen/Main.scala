@@ -17,4 +17,9 @@ object Main extends App {
   println("Months: " + Generators.months)
   println("Days: " + Generators.days)
 
+  //println("AllPermuts: " + Generators.allPermuts(5))
+
+  val l = List(1,2,3,4);
+  println("findLastIncreaseIdx(" + l + ") = " + Generators.findLastIncreaseIdx(l))
+
 }
