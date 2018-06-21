@@ -29,7 +29,7 @@ object Transforms {
     rec(List.empty, s)
   }
 
-  def merge(l : List[String]) : String = l.fold("")((s1, s2) => s1 + s2)
+  def merge(l : Iterable[String]) : String = l.fold("")((s1, s2) => s1 + s2)
 
 
 

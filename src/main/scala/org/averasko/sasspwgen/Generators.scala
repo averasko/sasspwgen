@@ -95,4 +95,9 @@ object Generators {
 
 
 
+  def permute(ss : Vector[String]) : Seq[Vector[String]] = {
+    permuts(ss.length).map(vi => vi.map(ss(_)))
+  }
+
+
 }

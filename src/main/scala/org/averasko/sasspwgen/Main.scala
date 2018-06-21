@@ -18,9 +18,15 @@ object Main extends App {
   println("Days: " + Generators.days)
 
 
-  val len = 4;
+  val len = 3;
   val a = Generators.permuts(len)
   println(s"permuts($len): $a")
   println(s"size = ${a.length}")
+
+
+  val v = Vector("One", "Two", "Three")
+  val s = Generators.permute(v).map(Transforms.merge)
+  println(s"permuting: $s")
+
 
 }
