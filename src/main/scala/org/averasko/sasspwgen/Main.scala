@@ -17,11 +17,6 @@ object Main extends App {
   println("Months: " + Generators.months)
   println("Days: " + Generators.days)
 
-  //println("AllPermuts: " + Generators.allPermuts(5))
-
-  val l = Vector(1,2,3,4);
-  println("findLastIncreaseIdx(" + l + ") = " + Generators.lastIncValueIdx(l))
-
 
   val len = 4;
   val a = Generators.permuts(len)
