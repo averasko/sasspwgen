@@ -22,4 +22,9 @@ object Main extends App {
   val l = Vector(1,2,3,4);
   println("findLastIncreaseIdx(" + l + ") = " + Generators.lastIncValueIdx(l))
 
+
+  val len = 3;
+  val a = Generators.permuts(len)
+  println(s"permuts($len): $a")
+
 }

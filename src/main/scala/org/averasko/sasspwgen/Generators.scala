@@ -43,6 +43,84 @@ object Generators {
     v
   }
 
+
+  /**
+    * Steinhaus–Johnson–Trotter algorithm
+    */
+  def permuts(n : Int): Seq[Vector[Int]] = {
+    //TODO: can we make control vector to be mutable? or not?
+    def rec(permut: Vector[Int], control: Vector[Int]) : Seq[Vector[Int]] = {
+      val (newPermut, newControl) = nextStep(permut, control)
+      if (newPermut.length > 0) {
+        Seq(permut) ++ rec(newPermut, newControl)
+      } else {
+        Seq(permut)
+      }
+    }
+
+    val firstPermut = (0 to n - 1).map((x : Int) => x).toVector
+    val firstControl = Vector(0) ++ (1 to n - 1).map((_) => -1).toVector
+
+    rec(firstPermut, firstControl)
+  }
+
+  def nextStep(permut : Vector[Int], control : Vector[Int]) : (Vector[Int], Vector[Int]) = {
+    val idx = idxOfLargestWithNonZeroControl(permut, control)
+    if (idx < 0) {
+      //end of algorithm
+      (Vector(), Vector())
+    } else if (control(idx) == -1) {
+      var newPermut = swap(permut, idx - 1, idx)
+      var newControl = swap(control, idx - 1, idx)
+      if (idx - 1 <= 0 || newPermut(idx - 2) > newPermut(idx - 1)) {
+        newControl = newControl.updated(idx - 1, 0)
+      }
+      newControl = updateControl(newPermut, newControl, idx - 1)
+      (newPermut, newControl)
+    } else if (control(idx) == 1) {
+      var newPermut = swap(permut, idx, idx + 1)
+      var newControl = swap(control, idx, idx + 1)
+      if (idx + 1 >= newPermut.length - 1 || newPermut(idx + 1) < newPermut(idx + 2)) {
+        newControl = newControl.updated(idx + 1, 0)
+      }
+      newControl = updateControl(newPermut, newControl, idx + 1)
+      (newPermut, newControl)
+    } else if (control(idx) == 0) {
+      throw new IllegalStateException("ups!")
+    } else {
+      throw new IllegalStateException("ups!")
+    }
+  }
+
+  def idxOfLargestWithNonZeroControl(permut: Vector[Int], control: Vector[Int]) : Int = {
+    // todo: functionalize
+    var p = -1;
+    for (i <- 0 until permut.length - 1) {
+      if (control(i) != 0 && permut(i) > p) {
+        p = permut(i)
+      }
+    }
+    p
+  }
+
+  def swap(v: Vector[Int], i1: Int, i2: Int): Vector[Int] = {
+    var tmp = v(i1)
+    var res = v.updated(i1, v(i2))
+    res.updated(i2, tmp)
+  }
+
+  def updateControl(permut: Vector[Int], control: Vector[Int], idx: Int) : Vector[Int] = {
+    //TODO: implement
+    control
+  }
+
+
+
+
+  /**
+    *
+    */
+
   /**
     * returns the largest index k such that l[k] < l[k+1]
     * returns -1 if k does not exist
