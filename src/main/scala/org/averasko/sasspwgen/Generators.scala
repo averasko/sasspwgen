@@ -94,13 +94,13 @@ object Generators {
 
   def idxOfLargestWithNonZeroControl(permut: Vector[Int], control: Vector[Int]) : Int = {
     // todo: functionalize
-    var p = -1;
-    for (i <- 0 until permut.length - 1) {
-      if (control(i) != 0 && permut(i) > p) {
-        p = permut(i)
+    var idxOfLargest = -1;
+    for (i <- 0 until permut.length) {
+      if (control(i) != 0 && (idxOfLargest < 0 || permut(i) > permut(idxOfLargest))) {
+        idxOfLargest = i
       }
     }
-    p
+    idxOfLargest
   }
 
   def swap(v: Vector[Int], i1: Int, i2: Int): Vector[Int] = {
@@ -110,8 +110,18 @@ object Generators {
   }
 
   def updateControl(permut: Vector[Int], control: Vector[Int], idx: Int) : Vector[Int] = {
-    //TODO: implement
-    control
+    var newControl = control
+    val chosenValue = permut(idx)
+    for (i <- 0 to control.length - 1) {
+      if (permut(i) > chosenValue) {
+        if (i < idx) {
+          newControl = newControl.updated(i, +1)
+        } else if (i > idx) {
+          newControl = newControl.updated(i, -1)
+        }
+      }
+    }
+    newControl
   }
 
 
