@@ -31,6 +31,13 @@ object Transforms {
 
   def merge(l : Iterable[String]) : String = l.fold("")((s1, s2) => s1 + s2)
 
+  def capitalizeEasy(s: String): Seq[String] = {
+    val s1 = s.toLowerCase
+    val s2 = s1.substring(0, 1).toUpperCase + s1.substring(1)
+    val s3 = s1.toUpperCase
+    Seq(s1, s2, s3)
+  }
+
 
 
 }

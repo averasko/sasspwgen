@@ -29,4 +29,11 @@ object Main extends App {
   println(s"permuting: $s")
 
 
+
+  val v2 = Combinators.insertRnd(Seq(List("One", "Two", "Three")), "Four")
+  println(s"insertRnd(): $v2")
+  println(s"capitalizeEasy(): ${Transforms.capitalizeEasy("DfiJeR")}")
+
+
+
 }

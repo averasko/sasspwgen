@@ -5,6 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 object Generators {
   /**
     * Steinhaus–Johnson–Trotter algorithm
+    * @see https://en.wikipedia.org/wiki/Steinhaus%E2%80%93Johnson%E2%80%93Trotter_algorithm
     */
   def permuts(n : Int): Seq[Vector[Int]] = {
     //TODO: can we make control vector to be mutable? or not?
