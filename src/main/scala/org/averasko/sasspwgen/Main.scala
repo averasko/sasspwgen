@@ -30,10 +30,25 @@ object Main extends App {
 
 
 
-  val v2 = Combinators.insertRnd(Seq(List("One", "Two", "Three")), "Four")
+  val v2 = Combinators.insertRnd(List("One", "Two", "Three"), "Four")
   println(s"insertRnd(): $v2")
   println(s"capitalizeEasy(): ${Transforms.capitalizeEasy("DfiJeR")}")
 
 
+  // ok, the real stuff
+  val s1 = "Hair"
+  val s2 = "Of"
+  val s3 = "Glory"
+
+  val w1 = Transforms.capitalizeEasy(s1).map(s => List(s))
+  val w2 = Transforms.capitalizeEasy(s2)
+  val w3 = Transforms.capitalizeEasy(s3)
+
+  val w12 = w1.flatMap(l => Combinators.insertRnd(l, w2))
+
+  val w123 = w12.flatMap(l => Combinators.insertRnd(l, w3))
+
+  println(s"combinations: ${w123}")
+  println(s"with length of ${w123.length}")
 
 }
