@@ -8,7 +8,7 @@ object Combinators {
       if (!t.isEmpty) {
         Seq((h :+ s) ++ t) ++ rec(h ++ List(t.head), t.tail)
       } else {
-        Seq(h :+ s)
+        Seq(h :+ s, h) //2 cases: inserting into the last pos and not inserting at all
       }
     }
 

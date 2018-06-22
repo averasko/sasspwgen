@@ -94,6 +94,8 @@ object Generators {
   def days : Seq[String] = (1 to 31).map(Integer.toString)
   //TODO: add leading zeroes
 
+  def symbols : Seq[String] = Seq("~","!","?","@","#","$","%","^","&","*","(",")","_","+")
+
 
 
   def permute(ss : Vector[String]) : Seq[Vector[String]] = {
