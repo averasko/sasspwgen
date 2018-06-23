@@ -11,7 +11,7 @@ object Main extends App {
     val w1 = Transforms.capitalizeEasy(s1).map(s => List(s))
     val w2 = Transforms.capitalizeEasy(s2)
     val w3 = Transforms.capitalizeEasy(s3)
-    val w4 = Generators.numbers(1).map(String.valueOf)
+    val w4 = Generators.numbers(2).map(String.valueOf)
     val w5 = Generators.symbols
 
     val w12 = w1.flatMap(l => Combinators.insertRnd(l, w2))
