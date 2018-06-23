@@ -7,14 +7,14 @@ object Generators {
     * Steinhaus–Johnson–Trotter algorithm
     * @see https://en.wikipedia.org/wiki/Steinhaus%E2%80%93Johnson%E2%80%93Trotter_algorithm
     */
-  def permuts(n : Int): Seq[Vector[Int]] = {
+  def permuts(n : Int): Stream[Vector[Int]] = {
     //TODO: can we make control vector to be mutable? or not?
-    def rec(permut: Vector[Int], control: Vector[Int]) : Seq[Vector[Int]] = {
+    def rec(permut: Vector[Int], control: Vector[Int]) : Stream[Vector[Int]] = {
       val (newPermut, newControl) = nextStep(permut, control)
       if (newPermut.length > 0) {
-        Seq(permut) ++ rec(newPermut, newControl)
+        Stream(permut) ++ rec(newPermut, newControl)
       } else {
-        Seq(permut)
+        Stream(permut)
       }
     }
 
@@ -85,20 +85,20 @@ object Generators {
   }
 
 
-  def numbers(maxLength : Int) : Seq[Int] = 0 to Math.round(Math.pow(10.0f, maxLength).toFloat) - 1
+  def numbers(maxLength : Int) : Stream[Int] = (0 to Math.round(Math.pow(10.0f, maxLength).toFloat) - 1).toStream
 
-  def years : Seq[String] = (1950 to 2030).map(Integer.toString)
-  def months : Seq[String] = (1 to 12).map(Integer.toString)
+  def years : Stream[String] = (1950 to 2030).map(Integer.toString).toStream
+  def months : Stream[String] = (1 to 12).map(Integer.toString).toStream
   //TODO: add leading zeroes
 
-  def days : Seq[String] = (1 to 31).map(Integer.toString)
+  def days : Stream[String] = (1 to 31).map(Integer.toString).toStream
   //TODO: add leading zeroes
 
-  def symbols : Seq[String] = Seq("~","!","?","@","#","$","%","^","&","*","(",")","_","+")
+  def symbols : Stream[String] = Stream("~","!","?","@","#","$","%","^","&","*","(",")","_","+")
 
 
 
-  def permute(ss : Vector[String]) : Seq[Vector[String]] = {
+  def permute(ss : Vector[String]) : Stream[Vector[String]] = {
     permuts(ss.length).map(vi => vi.map(ss(_)))
   }
 

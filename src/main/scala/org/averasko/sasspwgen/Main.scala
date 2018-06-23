@@ -22,7 +22,7 @@ object Main extends App {
 
     val w12345 = w1234.flatMap(l => Combinators.insertRnd(l, w5)).map(Transforms.merge)
 
-    w12345.map(println)
+    w12345.map(println).map(s => 1).fold(0)((x1, x2) => x1 + x2)
     //println(s"with length of ${w1234.length}")
 
   }

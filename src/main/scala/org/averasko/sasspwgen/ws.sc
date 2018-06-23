@@ -52,7 +52,13 @@ val w123 = w12.flatMap(l => Combinators.insertRnd(l, w3))
 
 val w1234 = w123.flatMap(l => Combinators.insertRnd(l, w4))
 
-//val w12345 = w1234.flatMap(l => Combinators.insertRnd(l, w5)).map(Transforms.merge)
+val w12345 = w1234.flatMap(l => Combinators.insertRnd(l, w5))
+
+
+
+val ww = w12345.map(Transforms.merge).map(s => {println(s); s}).map(s => 1).fold(0)((a,b) => a + b)
+
+println(s"count ${ww}")
 
 //println(s"combinations: ${w12345}")
 //println(s"with length of ${w12345.length}")
