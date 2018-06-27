@@ -1,5 +1,7 @@
 package org.averasko.sasspwgen
 
+import java.io.File
+
 import org.averasko.sasspwgen.SassPwGen.{computeFuture, timedFuture}
 
 import scala.io.Source
@@ -33,11 +35,13 @@ object Comparer extends App {
 
   def compare(srcName: String, dstName: String): Float = {
 
+    val ENCODING = "ISO-8859-1"
+
     println(s"Loading data from ${srcName}...")
-    val srcSet = Source.fromFile(srcName).getLines().toSet
+    val srcSet = Source.fromFile(new File(srcName), ENCODING).getLines().toSet
 
     println(s"Scanning data in ${dstName}...")
-    val res = Source.fromFile(dstName).getLines().map(dstLine => srcSet.contains(dstLine)).foldLeft((0,0))((ab, c) => if (c) (ab._1 + 1, ab._2) else (ab._1, ab._2 + 1))
+    val res = Source.fromFile(new File(dstName), ENCODING).getLines().map(dstLine => srcSet.contains(dstLine)).foldLeft((0,0))((ab, c) => if (c) (ab._1 + 1, ab._2) else (ab._1, ab._2 + 1))
 
     val ratio = (res._1 / (res._1 + res._2).toFloat) * 100
     println(s"Found ${res._1} matches and ${res._2} non-matches out of total ${res._1 + res._2} words which constitues ${ratio} percent.")
