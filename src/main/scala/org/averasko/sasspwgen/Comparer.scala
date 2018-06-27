@@ -2,10 +2,12 @@ package org.averasko.sasspwgen
 
 import org.averasko.sasspwgen.SassPwGen.{computeFuture, timedFuture}
 
+import scala.io.Source
+
 object Comparer extends App {
   override def main(args: Array[String]): Unit = {
 
-    if (args.length != 4) {
+    if (args.length != 4 && args.length != 0) {
       println("Incorrect arguments"); printUsage(); return;
     }
 
@@ -22,14 +24,23 @@ object Comparer extends App {
     val res = compare(srcName, dstName)
 
     println("Done!")
-    println(s"Result: $res");
+    println(s"Result: $res")
   }
 
   def printUsage(): Unit = {
-    println("Usage: cmd --src <fileName> --dst <fileName>");
+    println("Usage: --src <fileName> --dst <fileName>");
   }
 
-  def compare(srcFile: String, dstFile: String): Float = {
-    0.4f
+  def compare(srcName: String, dstName: String): Float = {
+
+    println(s"Loading data from ${srcName}...")
+    val srcSet = Source.fromFile(srcName).getLines().toSet
+
+    println(s"Scanning data in ${dstName}...")
+    val res = Source.fromFile(dstName).getLines().map(dstLine => srcSet.contains(dstLine)).foldLeft((0,0))((ab, c) => if (c) (ab._1 + 1, ab._2) else (ab._1, ab._2 + 1))
+
+    val ratio = (res._1 / (res._1 + res._2).toFloat) * 100
+    println(s"Found ${res._1} matches and ${res._2} non-matches out of total ${res._1 + res._2} words which constitues ${ratio} percent.")
+    ratio
   }
 }
