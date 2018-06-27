@@ -87,6 +87,7 @@ object Generators {
 
   def numbers(maxLength : Int) : Stream[Int] = (0 to Math.round(Math.pow(10.0f, maxLength).toFloat) - 1).toStream
 
+
   def years : Stream[String] = (1950 to 2030).map(Integer.toString).toStream
   def months : Stream[String] = (1 to 12).map(Integer.toString).toStream
   //TODO: add leading zeroes
@@ -98,7 +99,7 @@ object Generators {
 
 
 
-  def permute(ss : Vector[String]) : Stream[Vector[String]] = {
+  def combine(ss : Vector[String]) : Stream[Vector[String]] = {
     permuts(ss.length).map(vi => vi.map(ss(_)))
   }
 

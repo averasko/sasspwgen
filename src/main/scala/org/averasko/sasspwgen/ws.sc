@@ -23,7 +23,7 @@ println(s"size = ${a.length}")
 
 
 val v = Vector("One", "Two", "Three")
-val s = Generators.permute(v).map(Transforms.merge)
+val s = Generators.combine(v).map(Transforms.merge)
 println(s"permuting: $s")
 
 

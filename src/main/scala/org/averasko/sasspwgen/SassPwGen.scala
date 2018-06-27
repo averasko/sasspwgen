@@ -3,7 +3,7 @@ package org.averasko.sasspwgen
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object Main extends App {
+object SassPwGen extends App {
 
   override def main(args: Array[String]): Unit = {
 
