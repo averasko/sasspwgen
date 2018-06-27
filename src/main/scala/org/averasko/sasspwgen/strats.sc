@@ -1,4 +1,4 @@
-import org.averasko.sasspwgen.{Comparer, SassPwGen}
+import org.averasko.sasspwgen.{Comparer, EasyStrategy, HairOfGloryStrategy, SassPwGen}
 // depends on ../SecLists/Passwords/...
 
 // 3 lists of ~100 passwords
@@ -8,7 +8,7 @@ val fileNameEasy = List("darkweb2017-top100.txt", "probable-v2-top207.txt", "twi
 
 
 val srcName = "password.txt"
-SassPwGen.computeToFile(srcName)
+SassPwGen.computeToFile(srcName, new EasyStrategy())
 
 val wordSet = Comparer.cachePasswords(srcName)
 

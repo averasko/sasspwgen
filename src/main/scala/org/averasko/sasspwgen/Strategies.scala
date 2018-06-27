@@ -13,8 +13,21 @@ object Strategies {
 
 }
 
+
+/**
+  * We want this strategy to cover 80% of the most frequent passwords in the real lists.
+  */
+class EasyStrategy extends Strategy {
+  override def compute() : Seq[String] = {
+
+    Seq("password")
+
+
+  }
+}
+
 class HairOfGloryStrategy extends Strategy {
-  override def compute (): Seq[String] = {
+  override def compute(): Seq[String] = {
     val s1 = "Hair"
     val s2 = "Of"
     val s3 = "Glory"

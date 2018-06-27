@@ -16,28 +16,24 @@ object SassPwGen extends App {
   }
 
   def computeFuture = Future{
-    computeToOutput
+    computeToOutput(new HairOfGloryStrategy())
   }
 
-  def computeToOutput = {
-    computeStream()
+  def computeToOutput(strategy: Strategy) = {
+    strategy.compute()
       .map(println)
       .map(s => 1)
       .foldLeft(0)((x1, x2) => x1 + x2)
   }
 
-  def computeToFile(outFileName: String) = {
+  def computeToFile(outFileName: String, strategy: Strategy) = {
     val pw = new PrintWriter(new File(outFileName))
-    computeStream()
+    strategy.compute()
       .map(s => pw.write(s))
       .map(s => 1)
       .foldLeft(0)((x1, x2) => x1 + x2)
 
     pw.close
-  }
-
-  def computeStream(): Seq[String] = {
-    new org.averasko.sasspwgen.HairOfGloryStrategy().compute()
   }
 
   def timedFuture[T](future: Future[T]) = {
