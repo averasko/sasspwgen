@@ -106,44 +106,25 @@ object Generators {
     permuts(ss.length).map(vi => vi.map(ss(_)))
   }
 
-  def increasingNums(maxLength: Int = 10) : Stream[String] = {
+
+  def trailingNums(maxLength: Int = 10, nextValue: (Int) => Int) : Stream[String] = {
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
       if (len < maxLength && (value >= 0 && value <= 9)) {
-        Stream(tail) ++ endsWith(len + 1, value - 1, List(value) ++ tail)
+        Stream(tail) ++ endsWith(len + 1, nextValue(value), List(value) ++ tail)
       } else {
         Stream(tail)
       }
     }
 
-    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(1, n - 1, List(n))))
+    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(1, nextValue(n), List(n))))
       .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
   }
 
-  def decreasingNums(maxLength: Int = 10) : Stream[String] = {
-    def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
-      if (len < maxLength && (value >= 0 && value <= 9)) {
-        Stream(tail) ++ endsWith(len + 1, value + 1, List(value) ++ tail)
-      } else {
-        Stream(tail)
-      }
-    }
+  def increasingNums(maxLength: Int = 10) : Stream[String] = trailingNums(maxLength, n => n - 1)
 
-    (Stream(List()) ++ Stream.from(9, -1).take(10).flatMap(n => endsWith(1, n + 1, List(n))))
-      .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
-  }
+  def decreasingNums(maxLength: Int = 10) : Stream[String] = trailingNums(maxLength, n => n + 1)
 
-  def repeatingNums(maxLength: Int = 10) : Stream[String] = {
-    def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
-      if (len < maxLength && (value >= 0 && value <= 9)) {
-        Stream(tail) ++ endsWith(len + 1, value, List(value) ++ tail)
-      } else {
-        Stream(tail)
-      }
-    }
-
-    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(1, n, List(n))))
-      .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
-  }
+  def repeatingNums(maxLength: Int = 10) : Stream[String] = trailingNums(maxLength, identity)
 
 
 }

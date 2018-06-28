@@ -23,7 +23,7 @@ class GeneratorsSpec extends FunSpec {
   describe("decreasingNums") {
     it("common case") {
       assert(Generators.decreasingNums(2) ==
-        Stream("", "9", "8", "98", "7", "87", "6", "76", "5", "65", "4", "54", "3", "43", "2", "32", "1", "21", "0", "10"),
+        Stream("", "0", "10", "1", "21", "2", "32", "3", "43", "4", "54", "5", "65", "6", "76", "7", "87", "8", "98", "9"),
         "bla")
     }
   }
