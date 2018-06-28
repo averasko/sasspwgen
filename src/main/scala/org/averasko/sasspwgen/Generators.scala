@@ -107,6 +107,11 @@ object Generators {
   }
 
 
+  def hackerWords = Stream("password", "admin", "root", "god")
+
+  def easyPass = Stream("querty")
+
+
   def trailingNums(maxLength: Int = 10, nextValue: (Int) => Int) : Stream[String] = {
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
       if (len < maxLength && (value >= 0 && value <= 9)) {

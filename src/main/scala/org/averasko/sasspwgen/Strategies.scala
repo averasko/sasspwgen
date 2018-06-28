@@ -20,7 +20,7 @@ object Strategies {
 object EasyStrategy extends Strategy {
   override def compute() : Stream[String] = {
 
-    Stream("password") ++ Generators.increasingNums() ++ Generators.decreasingNums() ++ Generators.repeatingNums()
+    Generators.hackerWords ++ Generators.increasingNums() ++ Generators.decreasingNums() ++ Generators.repeatingNums()
 
   }
 }
