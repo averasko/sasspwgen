@@ -108,7 +108,7 @@ object Generators {
 
   def increasingNums(maxLength: Int = 10) : Stream[String] = {
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
-      if (len < maxLength && value >= 0) {
+      if (len < maxLength && (value >= 0 && value <= 9)) {
         Stream(tail) ++ endsWith(len + 1, value - 1, List(value) ++ tail)
       } else {
         Stream(tail)
@@ -121,7 +121,7 @@ object Generators {
 
   def decreasingNums(maxLength: Int = 10) : Stream[String] = {
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
-      if (len < maxLength && value <= 9) {
+      if (len < maxLength && (value >= 0 && value <= 9)) {
         Stream(tail) ++ endsWith(len + 1, value + 1, List(value) ++ tail)
       } else {
         Stream(tail)
@@ -129,6 +129,19 @@ object Generators {
     }
 
     (Stream(List()) ++ Stream.from(9, -1).take(10).flatMap(n => endsWith(1, n + 1, List(n))))
+      .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
+  }
+
+  def repeatingNums(maxLength: Int = 10) : Stream[String] = {
+    def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
+      if (len < maxLength && (value >= 0 && value <= 9)) {
+        Stream(tail) ++ endsWith(len + 1, value, List(value) ++ tail)
+      } else {
+        Stream(tail)
+      }
+    }
+
+    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(1, n, List(n))))
       .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
   }
 

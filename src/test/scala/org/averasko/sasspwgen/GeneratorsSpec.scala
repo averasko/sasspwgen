@@ -28,4 +28,12 @@ class GeneratorsSpec extends FunSpec {
     }
   }
 
+  describe("repeatingNums") {
+    it("common case") {
+      assert(Generators.repeatingNums(2) ==
+        Stream("", "0", "00", "1", "11", "2", "22", "3", "33", "4", "44", "5", "55", "6", "66", "7", "77", "8", "88", "9", "99"),
+        "bla")
+    }
+  }
+
 }
