@@ -106,7 +106,7 @@ object Generators {
     permuts(ss.length).map(vi => vi.map(ss(_)))
   }
 
-  def increasingNums(maxLength: Int) = {
+  def increasingNums(maxLength: Int) : Stream[String] = {
 
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
       if (tail.isEmpty) {

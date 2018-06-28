@@ -29,7 +29,7 @@ object SassPwGen extends App {
   def computeToFile(outFileName: String, strategy: Strategy) = {
     val pw = new PrintWriter(new File(outFileName))
     strategy.compute()
-      .map(s => pw.write(s))
+      .map(s => pw.println(s))
       .map(s => 1)
       .foldLeft(0)((x1, x2) => x1 + x2)
 
