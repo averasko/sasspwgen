@@ -106,19 +106,29 @@ object Generators {
     permuts(ss.length).map(vi => vi.map(ss(_)))
   }
 
-  def increasingNums(maxLength: Int) : Stream[String] = {
-
+  def increasingNums(maxLength: Int = 10) : Stream[String] = {
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
-      if (tail.isEmpty) {
-        endsWith(len + 1, value - 1, List(value) ++ tail)
-      } else if (len < maxLength && value >= 0) {
+      if (len < maxLength && value >= 0) {
         Stream(tail) ++ endsWith(len + 1, value - 1, List(value) ++ tail)
       } else {
         Stream(tail)
       }
     }
 
-    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(0, n, List.empty)))
+    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(1, n - 1, List(n))))
+      .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
+  }
+
+  def decreasingNums(maxLength: Int = 10) : Stream[String] = {
+    def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
+      if (len < maxLength && value <= 9) {
+        Stream(tail) ++ endsWith(len + 1, value + 1, List(value) ++ tail)
+      } else {
+        Stream(tail)
+      }
+    }
+
+    (Stream(List()) ++ Stream.from(9, -1).take(10).flatMap(n => endsWith(1, n + 1, List(n))))
       .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
   }
 

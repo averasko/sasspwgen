@@ -17,15 +17,15 @@ object Strategies {
 /**
   * We want this strategy to cover 80% of the most frequent passwords in the real lists.
   */
-class EasyStrategy extends Strategy {
+object EasyStrategy extends Strategy {
   override def compute() : Stream[String] = {
 
-    Stream("password") ++ Generators.increasingNums(5)
+    Stream("password") ++ Generators.increasingNums() ++ Generators.decreasingNums()
 
   }
 }
 
-class HairOfGloryStrategy extends Strategy {
+object HairOfGloryStrategy extends Strategy {
   override def compute(): Stream[String] = {
     val s1 = "Hair"
     val s2 = "Of"

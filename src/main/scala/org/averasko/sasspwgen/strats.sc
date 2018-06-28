@@ -7,7 +7,9 @@ val folder = "/Users/averasko/workspace/SecLists/Passwords/"
 val fileNameEasy = List("darkweb2017-top100.txt", "probable-v2-top207.txt", "twitter-banned.txt").map(s => folder + s)
 
 
-val wordSet = new EasyStrategy().compute().toSet
+val wordSet = EasyStrategy.compute().toSet
+
+
 println(s" wordSet size = ${wordSet.size}")
 
 fileNameEasy.foreach(dstFileName => {
