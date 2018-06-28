@@ -56,9 +56,11 @@ val w12345 = w1234.flatMap(l => Combinators.insertRnd(l, w5))
 
 
 
-val ww = w12345.map(Transforms.merge).map(s => {println(s); s}).map(s => 1).fold(0)((a,b) => a + b)
+//val ww = w12345.map(Transforms.merge).map(s => {println(s); s}).map(s => 1).fold(0)((a,b) => a + b)
 
-println(s"count ${ww}")
+//println(s"count ${ww}")
 
 //println(s"combinations: ${w12345}")
 //println(s"with length of ${w12345.length}")
+
+Generators.increasingNums(3).toList

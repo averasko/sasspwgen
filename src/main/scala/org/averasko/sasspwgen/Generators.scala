@@ -1,5 +1,6 @@
 package org.averasko.sasspwgen
 
+import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
 object Generators {
@@ -85,7 +86,9 @@ object Generators {
   }
 
 
-  def numbers(maxLength : Int) : Stream[Int] = (0 to Math.round(Math.pow(10.0f, maxLength).toFloat) - 1).toStream
+  def maxValue(len : Int): Int = Math.round(Math.pow(10.0f, len).toFloat) - 1
+
+  def numbers(maxLength : Int) : Stream[Int] = (0 to maxValue(maxLength)).toStream
 
 
   def years : Stream[String] = (1950 to 2030).map(Integer.toString).toStream
@@ -101,6 +104,22 @@ object Generators {
 
   def combine(ss : Vector[String]) : Stream[Vector[String]] = {
     permuts(ss.length).map(vi => vi.map(ss(_)))
+  }
+
+  def increasingNums(maxLength: Int) = {
+
+    def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
+      if (tail.isEmpty) {
+        endsWith(len + 1, value - 1, List(value) ++ tail)
+      } else if (len < maxLength && value >= 0) {
+        Stream(tail) ++ endsWith(len + 1, value - 1, List(value) ++ tail)
+      } else {
+        Stream(tail)
+      }
+    }
+
+    (Stream(List()) ++ Stream.from(0, 1).take(10).flatMap(n => endsWith(0, n, List.empty)))
+      .map(lOfI => lOfI.map(i => i.toString)).map(Transforms.merge)
   }
 
 

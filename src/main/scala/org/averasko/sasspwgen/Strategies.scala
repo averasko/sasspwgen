@@ -2,7 +2,7 @@ package org.averasko.sasspwgen
 
 class Strategy {
 
-  def compute() : Seq[String] = ???
+  def compute() : Stream[String] = ???
 
 }
 
@@ -18,16 +18,16 @@ object Strategies {
   * We want this strategy to cover 80% of the most frequent passwords in the real lists.
   */
 class EasyStrategy extends Strategy {
-  override def compute() : Seq[String] = {
+  override def compute() : Stream[String] = {
 
-    Seq("password")
+    Stream("password")
 
 
   }
 }
 
 class HairOfGloryStrategy extends Strategy {
-  override def compute(): Seq[String] = {
+  override def compute(): Stream[String] = {
     val s1 = "Hair"
     val s2 = "Of"
     val s3 = "Glory"
