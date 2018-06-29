@@ -1,7 +1,10 @@
 package org.averasko.sasspwgen
 
+import java.io.File
+
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 object Generators {
   /**
@@ -106,11 +109,31 @@ object Generators {
     permuts(ss.length).map(vi => vi.map(ss(_)))
   }
 
+  def usernames = wordsFromFile("../SecLists/Usernames/top-usernames-shortlist.txt").toStream
 
-  def hackerWords = Stream("password", "admin", "root", "god")
+  def names = wordsFromFile("../SecLists/Usernames/Names/names.txt").toStream
 
-  def easyPass = Stream("querty")
+  def words1 = wordsFromFile("../dictionary/popular.txt").toStream
+  def words2 = wordsFromFile("../dictionary/ospd.txt").toStream
+  def words3 = wordsFromFile("../dictionary/enable1.txt").toStream
 
+  def keyboardCombinationsHard = wordsFromFile("../SecLists/Passwords/Keyboard-Combinations.txt").toStream
+
+  def wordsFromFile(fileName : String) = Source.fromFile(new File(fileName), "ISO-8859-1").getLines()
+
+
+
+
+  def keyboardCombinationsEasy = Stream("querty", "zxcvbn")
+
+  def allWordsEasy = usernames ++ keyboardCombinationsEasy ++ names ++ words1
+  def allWordsHard = usernames ++ keyboardCombinationsEasy ++ names ++ words3
+
+
+  def allTrailingNums(max: Int = 10) =
+    Generators.increasingNums(max) ++
+      Generators.decreasingNums(max) ++
+      Generators.repeatingNums(max)
 
   def trailingNums(maxLength: Int = 10, nextValue: (Int) => Int) : Stream[String] = {
     def endsWith(len: Int, value : Int, tail: List[Int]) : Stream[List[Int]] = {
@@ -130,6 +153,7 @@ object Generators {
   def decreasingNums(maxLength: Int = 10) : Stream[String] = trailingNums(maxLength, n => n + 1)
 
   def repeatingNums(maxLength: Int = 10) : Stream[String] = trailingNums(maxLength, identity)
+
 
 
 }

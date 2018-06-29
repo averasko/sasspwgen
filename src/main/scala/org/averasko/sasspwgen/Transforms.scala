@@ -38,6 +38,21 @@ object Transforms {
     Stream(s1, s2, s3)
   }
 
+  def capitalizeEasy(s: Stream[String]) : Stream[String] = s.flatMap(capitalizeEasy)
+
+  /**
+    * you want the second input (s2) to be smaller
+    */
+  def concatenate(s1: Stream[String], s2: Stream[String]) : Stream[String] = {
+    val l2 = s2.toList
+    s1.flatMap(s => concatenate(s, l2))
+  }
+
+  def concatenate(s: String, l: List[String]): Stream[String] = l match {
+    case h :: t => Stream(s + h) ++ concatenate(s, t)
+    case h => Stream()
+  }
+
 
 
 }

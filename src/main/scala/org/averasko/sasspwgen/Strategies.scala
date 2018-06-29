@@ -20,7 +20,10 @@ object Strategies {
 object EasyStrategy extends Strategy {
   override def compute() : Stream[String] = {
 
-    Generators.hackerWords ++ Generators.increasingNums() ++ Generators.decreasingNums() ++ Generators.repeatingNums()
+      Generators.allWordsHard ++
+      Generators.allTrailingNums() ++
+      Transforms.concatenate(Generators.allWordsEasy, Generators.allTrailingNums(3)) ++
+      Generators.keyboardCombinationsHard
 
   }
 }
