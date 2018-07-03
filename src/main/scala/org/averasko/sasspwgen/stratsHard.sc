@@ -14,8 +14,8 @@ val wordSet = ExhaustiveStrategy.compute().toSet
 println(s" wordSet size = ${wordSet.size}")
 
 fileNames.foreach(dstFileName => {
-  val ratio = Comparer.compare(wordSet, dstFileName)
-  println(s"Matching '$dstFileName' \n=> $ratio %")
+  val (wordUsage, wordCoverage) = Comparer.compare(wordSet, dstFileName)
+  println(s"wordUsage = ${wordUsage}, wordCoverage = ${wordCoverage}.")
 })
 
 

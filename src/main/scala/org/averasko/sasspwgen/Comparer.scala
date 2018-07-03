@@ -31,19 +31,22 @@ object Comparer extends App {
     println("Usage: --src <fileName> --dst <fileName>");
   }
 
-  def compare(srcName: String, dstName: String): Float = {
+  def compare(srcName: String, dstName: String): (Float, Float) = {
     println(s"Loading data from ${srcName}...")
     compare(cachePasswords(srcName), dstName)
   }
 
-  def cachePasswords(fileName : String) : Set[String] = Source.fromFile(new File(fileName), "ISO-8859-1").getLines().toSet
+  def encoding() = "ISO-8859-1"
 
-  def compare(wordSet: Set[String], dstName: String): Float = {
+  def cachePasswords(fileName : String) : Set[String] = Source.fromFile(new File(fileName), encoding()).getLines().toSet
+
+  def compare(wordSet: Set[String], dstName: String): (Float, Float) = {
     println(s"Scanning data in ${dstName}...")
-    val res = Source.fromFile(new File(dstName), "ISO-8859-1").getLines().map(dstLine => wordSet.contains(dstLine)).foldLeft((0,0))((ab, c) => if (c) (ab._1 + 1, ab._2) else (ab._1, ab._2 + 1))
+    val res = Source.fromFile(new File(dstName), encoding()).getLines().map(dstLine => wordSet.contains(dstLine)).foldLeft((0,0))((ab, c) => if (c) (ab._1 + 1, ab._2) else (ab._1, ab._2 + 1))
 
-    val ratio = (res._1 / (res._1 + res._2).toFloat) * 100
-    println(s"Found ${res._1} matches and ${res._2} non-matches out of total ${res._1 + res._2} words which constitues ${ratio} percent.")
-    ratio
+    val wordUsage = res._1 / wordSet.size.toFloat * 100
+    val wordCoverage = (res._1 / (res._1 + res._2).toFloat) * 100
+    println(s"Found ${res._1} matches and ${res._2} non-matches out of total ${res._1 + res._2} words.")
+    (wordUsage, wordCoverage)
   }
 }
