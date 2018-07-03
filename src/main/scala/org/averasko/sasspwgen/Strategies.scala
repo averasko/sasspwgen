@@ -28,6 +28,18 @@ object EasyStrategy extends Strategy {
   }
 }
 
+/**
+  * This strategy should cover some significant percentage of the passwords of the real-word leaked databases.
+  * The aim is 50% coverage.
+  * Computation-wise, it should fit the largest instances on DigitalOcean: ~100 GB with ~30 CPUs
+  */
+object ExhaustiveStrategy extends Strategy {
+  override def compute() : Stream[String] = {
+    Stream("empty")
+
+  }
+}
+
 object HairOfGloryStrategy extends Strategy {
   override def compute(): Stream[String] = {
     val s1 = "Hair"
