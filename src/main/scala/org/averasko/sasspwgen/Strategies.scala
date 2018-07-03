@@ -35,8 +35,7 @@ object EasyStrategy extends Strategy {
   */
 object ExhaustiveStrategy extends Strategy {
   override def compute() : Stream[String] = {
-    Stream("empty")
-
+    Generators.allNames
   }
 }
 

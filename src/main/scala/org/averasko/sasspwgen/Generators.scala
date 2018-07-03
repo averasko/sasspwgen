@@ -111,7 +111,18 @@ object Generators {
 
   def usernames = wordsFromFile("../SecLists/Usernames/top-usernames-shortlist.txt").toStream
 
+
+  def maleNames1000 = wordsFromFile("../SecLists/Usernames/Names/malenames-usa-top1000.txt").toStream.map(s => s.toLowerCase)
+  def femaleNames1000 = wordsFromFile("../SecLists/Usernames/Names/femalenames-usa-top1000.txt").toStream.map(s => s.toLowerCase)
+  def familyNames1000 = wordsFromFile("../SecLists/Usernames/Names/familynames-usa-top1000.txt").toStream.map(s => s.toLowerCase)
   def names = wordsFromFile("../SecLists/Usernames/Names/names.txt").toStream
+
+  def firstNames2000 = maleNames1000 ++ femaleNames1000
+  def familyNames = familyNames1000 ++ names
+
+  def allNames = firstNames2000 ++ familyNames
+
+
 
   def words1 = wordsFromFile("../dictionary/popular.txt").toStream
   def words2 = wordsFromFile("../dictionary/ospd.txt").toStream
