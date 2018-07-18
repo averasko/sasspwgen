@@ -35,8 +35,9 @@ object EasyStrategy extends Strategy {
   */
 object ExhaustiveStrategy extends Strategy {
   override def compute() : Stream[String] = {
-    //Generators.allNames ++
-      Generators.allTrailingNums()
+    //Generators.allNames
+    //Generators.allTrailingNums(5)
+    Transforms.capitalizeEasy(Generators.words3)
 
   }
 }

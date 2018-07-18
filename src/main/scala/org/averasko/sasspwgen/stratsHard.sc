@@ -1,8 +1,6 @@
 import org.averasko.sasspwgen.{Comparer, EasyStrategy, HairOfGloryStrategy, SassPwGen}
 // depends on ../SecLists/Passwords/...
 
-// 3 lists of ~100 passwords
-
 val folder = "/Users/averasko/workspace/SecLists/Passwords/"
 
 val fileNames = List("Leaked-Databases/000webhost.txt", "Leaked-Databases/Ashley-Madison.txt",
