@@ -181,7 +181,9 @@ object Generators {
 
 
   // TODO: omg omg !!!
-  def phones() : Stream[String] = (1 to 10).map(Integer.toString).toStream.flatMap(h => (0 to 999999999).toStream.map(Integer.toString).map(t => h + t))
+  //def phones() : Stream[String] = (1 to 10).map(Integer.toString).toStream.flatMap(h => (0 to 999999999).toStream.map(Integer.toString).map(t => h + t))
+  // making it a smaller set (1M only)
+  def phones() : Stream[String] = (1000000000 to 1000999999).toStream.map(Integer.toString)
 
 
 }
