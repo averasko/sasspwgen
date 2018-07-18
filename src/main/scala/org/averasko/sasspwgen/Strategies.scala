@@ -37,8 +37,11 @@ object ExhaustiveStrategy extends Strategy {
   override def compute() : Stream[String] = {
     //Generators.allNames
     //Generators.allTrailingNums(5)
-    Transforms.capitalizeEasy(Generators.words3)
-
+    //Transforms.capitalizeEasy(Generators.words3)
+    //Transforms.concatenate(Transforms.capitalizeEasy(Generators.words1), Generators.allTrailingNums())
+    //Generators.zipcodes()
+    //Generators.DOBs()
+    Generators.phones()
   }
 }
 

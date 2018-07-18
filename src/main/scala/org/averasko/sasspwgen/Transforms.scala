@@ -43,13 +43,13 @@ object Transforms {
   /**
     * you want the second input (s2) to be smaller
     */
-  def concatenate(s1: Stream[String], s2: Stream[String]) : Stream[String] = {
-    val l2 = s2.toList
-    s1.flatMap(s => concatenate(s, l2))
+  def concatenate(many: Stream[String], few: Stream[String]) : Stream[String] = {
+    val l2 = few.toList
+    many.flatMap(s => concatenate(s, l2))
   }
 
-  def concatenate(s: String, l: List[String]): Stream[String] = l match {
-    case h :: t => Stream(s + h) ++ concatenate(s, t)
+  def concatenate(many: String, few: List[String]): Stream[String] = few match {
+    case h :: t => Stream(many + h) ++ concatenate(many, t)
     case h => Stream()
   }
 

@@ -3,6 +3,7 @@ package org.averasko.sasspwgen
 import java.io.File
 
 import scala.annotation.tailrec
+import scala.collection.immutable.NumericRange
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 
@@ -165,6 +166,22 @@ object Generators {
 
   def repeatingNums(maxLength: Int = 10) : Stream[String] = trailingNums(maxLength, identity)
 
+
+  //TODO: optimize to make them real and covering the ones starting from 0...
+  def zipcodes() : Stream[String] = (100000 to 999999).map(Integer.toString).toStream
+
+  def DOBs() : Stream[String] = (1920 to 2020).toStream.flatMap(y => (1 to 12).toStream.map(m => (y, m))).
+    flatMap(ym => (1 to 31).toStream.map(d => (ym._1, ym._2, d))).map(ymd => (ymd._1.toString, ymd._2.toString, ymd._3.toString)).
+    flatMap(ymd => Stream(
+      ymd._1 + ymd._2 + ymd._3,
+      ymd._3 + ymd._2 + ymd._1,
+      ymd._2 + ymd._3 + ymd._1,
+      ymd._2 + ymd._3,
+      ymd._3 + ymd._2))
+
+
+  // TODO: omg omg !!!
+  def phones() : Stream[String] = (1 to 10).map(Integer.toString).toStream.flatMap(h => (0 to 999999999).toStream.map(Integer.toString).map(t => h + t))
 
 
 }
