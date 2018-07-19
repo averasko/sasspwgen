@@ -41,7 +41,8 @@ object ExhaustiveStrategy extends Strategy {
     //Transforms.concatenate(Transforms.capitalizeEasy(Generators.words1), Generators.allTrailingNums())
     //Generators.zipcodes()
     //Generators.DOBs()
-    Generators.phones()
+    //Generators.phones()
+    Transforms.concatenate(Transforms.capitalizeEasy(Generators.words1), Generators.sym3)
   }
 }
 
@@ -55,7 +56,7 @@ object HairOfGloryStrategy extends Strategy {
     val w2 = Transforms.capitalizeEasy (s2)
     val w3 = Transforms.capitalizeEasy (s3)
     val w4 = Generators.numbers (1).map (String.valueOf)
-    val w5 = Generators.symbols
+    val w5 = Generators.sym1
 
     w1.flatMap (l => Combinators.insertRnd (l, w2) )
     .flatMap (l => Combinators.insertRnd (l, w3) )

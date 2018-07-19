@@ -102,8 +102,9 @@ object Generators {
   def days : Stream[String] = (1 to 31).map(Integer.toString).toStream
   //TODO: add leading zeroes
 
-  def symbols : Stream[String] = Stream("~","!","?","@","#","$","%","^","&","*","(",")","_","+")
-
+  def sym1 : Stream[String] = Stream("~","`","!","@","#","$","%","^","&","*","(",")","_","+","-","=")
+  def sym2 : Stream[String] = Stream("[","]","{","}","\\","|",";",":","'","\"",",",".","<",">","/","?")
+  def sym3 = sym1 ++ sym2
 
 
   def combine(ss : Vector[String]) : Stream[Vector[String]] = {
