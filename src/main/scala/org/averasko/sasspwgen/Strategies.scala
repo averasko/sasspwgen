@@ -59,3 +59,7 @@ class HairOfGloryStrategy extends Strategy {
   }
 }
 
+class ThreeWordsStrategy extends Strategy {
+  override def compute(): Stream[String] = Stream("one", "two", "three")
+}
+

@@ -19,22 +19,26 @@ object Generator extends App {
 
     var strategyName = "org.averasko.sasspwgen.EasyStrategy"
     var outFileName = ""
+    var silentFlag = false
     args.sliding(2, 2).toList.collect {
       case Array("--strategy", newStrategyName: String) => strategyName = newStrategyName
       case Array("--output", newFileName: String) => outFileName = newFileName
+      case Array("--silent", newSilentFlag: String) => silentFlag = newSilentFlag.toLowerCase().equals("yes")
       case any => { println("Incorrect arguments"); printUsage(); return; }
     }
 
-    println(s"Instantiating strategy $strategyName...")
+    userPrintln(s"Instantiating strategy $strategyName...", silentFlag)
     val strategy = instatiatedStrategy(strategyName)
 
     strategy.compute().map(s => println(s)).foldLeft(0)((a,b) => a + 1)
 
+    userPrintln("Done!", silentFlag)
+  }
 
-
-
-    println("Done!")
-    readLine()
+  def userPrintln(line: String, silent: Boolean) = {
+    if (!silent) {
+      println(line)
+    }
   }
 
   def instatiatedStrategy(strategyName: String): Strategy = {
@@ -48,12 +52,12 @@ object Generator extends App {
   }
 
   def argsAreCorrect(args: Array[String]) = {
-    args != null && (args.length == 0 || args.length == 2 || args.length == 4)
+    args != null && (args.length == 0 || args.length == 2 || args.length == 4 || args.length == 6)
   }
 
   def printUsage(): Unit = {
     println("Runs a specified password generation strategy and spits the output into the console or a file.");
-    println("Usage: --strategy <FullClassName> [ --output <fileName> ]");
+    println("Usage: --strategy <FullClassName> [ --output <fileName> ] [ --silent <yes/no>] ");
   }
 
   def compare(srcName: String, dstName: String): (Float, Float) = {
