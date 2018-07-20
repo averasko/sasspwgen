@@ -7,13 +7,6 @@ class Strategy {
 }
 
 
-object Strategies {
-
-
-
-}
-
-
 /**
   * We want this strategy to cover 80% of the most frequent passwords in the real lists.
   */

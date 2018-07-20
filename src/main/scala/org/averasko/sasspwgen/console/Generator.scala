@@ -3,7 +3,7 @@ package org.averasko.sasspwgen.console
 
 import java.io.File
 
-import org.averasko.sasspwgen.{EasyStrategy, Strategy}
+import org.averasko.sasspwgen.Strategy
 
 import scala.io.Source
 import scala.reflect.runtime.{universe => univ}
@@ -25,28 +25,26 @@ object Generator extends App {
       case any => { println("Incorrect arguments"); printUsage(); return; }
     }
 
-    // load the strategy
-    val m = univ.runtimeMirror(getClass.getClassLoader)
-    println(s"m = $m")
+    println(s"Instantiating strategy $strategyName...")
+    val strategy = instatiatedStrategy(strategyName)
 
-    val strategyClass = m.staticClass(strategyName)
-    println(s"strategyClass = $strategyClass")
-
-    val classMirror = m.reflectClass(strategyClass)
-    println(s"classMirror = $classMirror")
-
-    val ctor = strategyClass.toType.decl(univ.termNames.CONSTRUCTOR).asMethod
-    println(s"ctor = $ctor")
-
-    val ctorm = classMirror.reflectConstructor(ctor)
-    val zz = ctorm()
-    println(s"zz = $zz")
+    strategy.compute().map(s => println(s)).foldLeft(0)((a,b) => a + 1)
 
 
 
 
     println("Done!")
-    println(s"Result:")
+    readLine()
+  }
+
+  def instatiatedStrategy(strategyName: String): Strategy = {
+    val m = univ.runtimeMirror(getClass.getClassLoader)
+    val strategyClass = m.staticClass(strategyName)
+    val classMirror = m.reflectClass(strategyClass)
+    val ctor = strategyClass.toType.decl(univ.termNames.CONSTRUCTOR).asMethod
+    val ctorm = classMirror.reflectConstructor(ctor)
+    val obj = ctorm()
+    obj.asInstanceOf[Strategy]
   }
 
   def argsAreCorrect(args: Array[String]) = {
