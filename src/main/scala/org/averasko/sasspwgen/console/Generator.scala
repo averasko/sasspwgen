@@ -1,11 +1,9 @@
 package org.averasko.sasspwgen.console
 
-
-import java.io.File
+import java.io.{File, PrintWriter}
 
 import org.averasko.sasspwgen.Strategy
 
-import scala.io.Source
 import scala.reflect.runtime.{universe => univ}
 
 object Generator extends App {
@@ -28,9 +26,13 @@ object Generator extends App {
     }
 
     userPrintln(s"Instantiating strategy $strategyName...", silentFlag)
-    val strategy = instatiatedStrategy(strategyName)
+    val strategy = instantiatedStrategy(strategyName)
 
-    strategy.compute().map(s => println(s)).foldLeft(0)((a,b) => a + 1)
+    if (outFileName.isEmpty) {
+      strategy.compute().map(s => println(s)).foldLeft(0)((a,b) => a + 1)
+    } else {
+      computeToFile(strategy, outFileName)
+    }
 
     userPrintln("Done!", silentFlag)
   }
@@ -41,7 +43,7 @@ object Generator extends App {
     }
   }
 
-  def instatiatedStrategy(strategyName: String): Strategy = {
+  def instantiatedStrategy(strategyName: String): Strategy = {
     val m = univ.runtimeMirror(getClass.getClassLoader)
     val strategyClass = m.staticClass(strategyName)
     val classMirror = m.reflectClass(strategyClass)
@@ -57,25 +59,17 @@ object Generator extends App {
 
   def printUsage(): Unit = {
     println("Runs a specified password generation strategy and spits the output into the console or a file.");
-    println("Usage: --strategy <FullClassName> [ --output <fileName> ] [ --silent <yes/no>] ");
+    println("Usage: [ --strategy <FullClassName> ] [ --output <fileName> ] [ --silent <yes/no>] ");
   }
 
-  def compare(srcName: String, dstName: String): (Float, Float) = {
-    println(s"Loading data from ${srcName}...")
-    compare(cachePasswords(srcName), dstName)
+  def computeToFile(strategy: Strategy, outFileName: String) = {
+    val pw = new PrintWriter(new File(outFileName))
+    strategy.compute()
+      .map(s => pw.println(s))
+      .map(s => 1)
+      .foldLeft(0)((x1, x2) => x1 + x2)
+
+    pw.close
   }
 
-  def encoding() = "ISO-8859-1"
-
-  def cachePasswords(fileName : String) : Set[String] = Source.fromFile(new File(fileName), encoding()).getLines().toSet
-
-  def compare(wordSet: Set[String], dstName: String): (Float, Float) = {
-    println(s"Scanning data in ${dstName}...")
-    val res = Source.fromFile(new File(dstName), encoding()).getLines().map(dstLine => wordSet.contains(dstLine)).foldLeft((0,0))((ab, c) => if (c) (ab._1 + 1, ab._2) else (ab._1, ab._2 + 1))
-
-    val wordUsage = res._1 / wordSet.size.toFloat * 100
-    val wordCoverage = (res._1 / (res._1 + res._2).toFloat) * 100
-    println(s"Found ${res._1} matches and ${res._2} non-matches out of total ${res._1 + res._2} words.")
-    (wordUsage, wordCoverage)
-  }
 }

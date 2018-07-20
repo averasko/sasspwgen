@@ -1,42 +1,24 @@
 package org.averasko.sasspwgen.console
 
-import java.io.{File, PrintWriter}
-
-import org.averasko.sasspwgen.{HairOfGloryStrategy, Strategy}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
+/**
+  * Runs Generator.main() but count the time it takes as well.
+  */
 object SassPwGen extends App {
 
   override def main(args: Array[String]): Unit = {
 
-    timedFuture(computeFuture)
+    timedFuture(computeFuture(args))
 
-    println("computing...")
     readLine()
   }
 
-  def computeFuture = Future{
-    computeToOutput(new HairOfGloryStrategy())
+  def computeFuture(args: Array[String]) = Future{
+    Generator.main(args)
   }
 
-  def computeToOutput(strategy: Strategy) = {
-    strategy.compute()
-      .map(println)
-      .map(s => 1)
-      .foldLeft(0)((x1, x2) => x1 + x2)
-  }
-
-  def computeToFile(outFileName: String, strategy: Strategy) = {
-    val pw = new PrintWriter(new File(outFileName))
-    strategy.compute()
-      .map(s => pw.println(s))
-      .map(s => 1)
-      .foldLeft(0)((x1, x2) => x1 + x2)
-
-    pw.close
-  }
 
   def timedFuture[T](future: Future[T]) = {
     val start = System.currentTimeMillis()
@@ -45,7 +27,5 @@ object SassPwGen extends App {
     })
     future
   }
-
-
 
 }

@@ -8,7 +8,7 @@ val fileNames = List("Leaked-Databases/000webhost.txt", "Leaked-Databases/Ashley
   "Leaked-Databases/alleged-gmail-passwords.txt", "Leaked-Databases/md5decryptor.uk.txt",
   "Leaked-Databases/rockyou.txt").map(s => folder + s)
 
-val wordSet = ExhaustiveStrategy.compute().toSet
+val wordSet = new ExhaustiveStrategy().compute().toSet
 
 println(s" wordSet size = ${wordSet.size}")
 
