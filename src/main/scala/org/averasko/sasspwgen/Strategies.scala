@@ -17,7 +17,7 @@ object Strategies {
 /**
   * We want this strategy to cover 80% of the most frequent passwords in the real lists.
   */
-object EasyStrategy extends Strategy {
+class EasyStrategy extends Strategy {
   override def compute() : Stream[String] = {
 
       Generators.allWordsHard ++

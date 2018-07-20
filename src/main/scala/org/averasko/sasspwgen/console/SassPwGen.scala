@@ -1,9 +1,11 @@
-package org.averasko.sasspwgen
+package org.averasko.sasspwgen.console
 
 import java.io.{File, PrintWriter}
 
-import scala.concurrent.Future
+import org.averasko.sasspwgen.{HairOfGloryStrategy, Strategy}
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object SassPwGen extends App {
 

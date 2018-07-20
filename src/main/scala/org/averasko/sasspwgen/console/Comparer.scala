@@ -1,4 +1,4 @@
-package org.averasko.sasspwgen
+package org.averasko.sasspwgen.console
 
 import java.io.File
 
@@ -8,7 +8,9 @@ object Comparer extends App {
   override def main(args: Array[String]): Unit = {
 
     if (args.length != 4 && args.length != 0) {
-      println("Incorrect arguments"); printUsage(); return;
+      println("Incorrect arguments")
+      printUsage()
+      return
     }
 
     var srcName = "src.txt"

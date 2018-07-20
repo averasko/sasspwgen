@@ -1,4 +1,5 @@
-import org.averasko.sasspwgen.{Comparer, EasyStrategy, HairOfGloryStrategy, SassPwGen}
+import org.averasko.sasspwgen.console.Comparer
+import org.averasko.sasspwgen.{EasyStrategy, ExhaustiveStrategy, HairOfGloryStrategy}
 // depends on ../SecLists/Passwords/...
 
 val folder = "/Users/averasko/workspace/SecLists/Passwords/"
