@@ -29,40 +29,20 @@ object Generator extends App {
     val m = univ.runtimeMirror(getClass.getClassLoader)
     println(s"m = $m")
 
-
-
-    val strategyClass = univ.typeOf[EasyStrategy].typeSymbol.asClass
+    val strategyClass = m.staticClass(strategyName)
     println(s"strategyClass = $strategyClass")
 
     val classMirror = m.reflectClass(strategyClass)
     println(s"classMirror = $classMirror")
 
-    val ctor = univ.typeOf[EasyStrategy].decl(univ.termNames.CONSTRUCTOR).asMethod
+    val ctor = strategyClass.toType.decl(univ.termNames.CONSTRUCTOR).asMethod
     println(s"ctor = $ctor")
 
     val ctorm = classMirror.reflectConstructor(ctor)
     val zz = ctorm()
-
     println(s"zz = $zz")
 
 
-
-    val module = m.staticModule(strategyName)
-
-
-    //EasyStrategy strat = module.asInstanceOf[Strategy]
-
-    println(s"module = $module")
-
-
-
-    val obj = m.reflectModule(module)
-    println(s"obj = $obj")
-
-
-
-
-    //Strategy strategy = Class.forName(strategyName).newInstance()
 
 
     println("Done!")

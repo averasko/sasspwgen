@@ -18,7 +18,7 @@ object SassPwGen extends App {
   }
 
   def computeFuture = Future{
-    computeToOutput(HairOfGloryStrategy)
+    computeToOutput(new HairOfGloryStrategy())
   }
 
   def computeToOutput(strategy: Strategy) = {

@@ -33,7 +33,7 @@ class EasyStrategy extends Strategy {
   * The aim is 50% coverage.
   * Computation-wise, it should fit the largest instances on DigitalOcean: ~100 GB with ~30 CPUs
   */
-object ExhaustiveStrategy extends Strategy {
+class ExhaustiveStrategy extends Strategy {
   override def compute() : Stream[String] = {
     //Generators.allNames
     //Generators.allTrailingNums(5)
@@ -46,7 +46,7 @@ object ExhaustiveStrategy extends Strategy {
   }
 }
 
-object HairOfGloryStrategy extends Strategy {
+class HairOfGloryStrategy extends Strategy {
   override def compute(): Stream[String] = {
     val s1 = "Hair"
     val s2 = "Of"
