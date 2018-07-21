@@ -1,6 +1,6 @@
 package org.averasko.sasspwgen
 
-class Strategy {
+trait Strategy {
 
   def compute() : Stream[String] = ???
 
